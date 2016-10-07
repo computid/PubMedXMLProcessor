@@ -1,0 +1,363 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A71875E71DA6506A00FFFFBA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A71875E61DA6506A00FFFFBA /* main.m */; };
+		A71875F11DA659B000FFFFBA /* FileProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = A71875F01DA659B000FFFFBA /* FileProcessor.m */; };
+		A71875F41DA65B7400FFFFBA /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A71875F31DA65B7400FFFFBA /* XMLReader.m */; };
+		A71875F71DA6B70600FFFFBA /* DCTar.m in Sources */ = {isa = PBXBuildFile; fileRef = A71875F61DA6B70600FFFFBA /* DCTar.m */; };
+		A71876151DA6B86200FFFFBA /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = A71875FB1DA6B86200FFFFBA /* adler32.c */; };
+		A71876161DA6B86200FFFFBA /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = A71875FC1DA6B86200FFFFBA /* compress.c */; };
+		A71876171DA6B86200FFFFBA /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = A71875FD1DA6B86200FFFFBA /* crc32.c */; };
+		A71876181DA6B86200FFFFBA /* deflate.c in Sources */ = {isa = PBXBuildFile; fileRef = A71875FF1DA6B86200FFFFBA /* deflate.c */; };
+		A71876191DA6B86200FFFFBA /* gzclose.c in Sources */ = {isa = PBXBuildFile; fileRef = A71876011DA6B86200FFFFBA /* gzclose.c */; };
+		A718761A1DA6B86200FFFFBA /* gzlib.c in Sources */ = {isa = PBXBuildFile; fileRef = A71876031DA6B86200FFFFBA /* gzlib.c */; };
+		A718761B1DA6B86200FFFFBA /* gzread.c in Sources */ = {isa = PBXBuildFile; fileRef = A71876041DA6B86200FFFFBA /* gzread.c */; };
+		A718761C1DA6B86200FFFFBA /* gzwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = A71876051DA6B86200FFFFBA /* gzwrite.c */; };
+		A718761D1DA6B86200FFFFBA /* infback.c in Sources */ = {isa = PBXBuildFile; fileRef = A71876061DA6B86200FFFFBA /* infback.c */; };
+		A718761E1DA6B86200FFFFBA /* inffast.c in Sources */ = {isa = PBXBuildFile; fileRef = A71876071DA6B86200FFFFBA /* inffast.c */; };
+		A718761F1DA6B86200FFFFBA /* inflate.c in Sources */ = {isa = PBXBuildFile; fileRef = A718760A1DA6B86200FFFFBA /* inflate.c */; };
+		A71876201DA6B86200FFFFBA /* inftrees.c in Sources */ = {isa = PBXBuildFile; fileRef = A718760C1DA6B86200FFFFBA /* inftrees.c */; };
+		A71876211DA6B86200FFFFBA /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = A718760E1DA6B86200FFFFBA /* trees.c */; };
+		A71876221DA6B86200FFFFBA /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = A71876101DA6B86200FFFFBA /* uncompr.c */; };
+		A71876231DA6B86200FFFFBA /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = A71876131DA6B86200FFFFBA /* zutil.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A71875E11DA6506A00FFFFBA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A71875E31DA6506A00FFFFBA /* DataProcessor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DataProcessor; sourceTree = BUILT_PRODUCTS_DIR; };
+		A71875E61DA6506A00FFFFBA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A71875EF1DA659B000FFFFBA /* FileProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileProcessor.h; sourceTree = "<group>"; };
+		A71875F01DA659B000FFFFBA /* FileProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileProcessor.m; sourceTree = "<group>"; };
+		A71875F21DA65B7400FFFFBA /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		A71875F31DA65B7400FFFFBA /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		A71875F51DA6B70600FFFFBA /* DCTar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCTar.h; sourceTree = "<group>"; };
+		A71875F61DA6B70600FFFFBA /* DCTar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCTar.m; sourceTree = "<group>"; };
+		A71875F91DA6B84B00FFFFBA /* adler32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = DataProcessor/ZLib/adler32.c; sourceTree = "<group>"; };
+		A71875FB1DA6B86200FFFFBA /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = adler32.c; sourceTree = "<group>"; };
+		A71875FC1DA6B86200FFFFBA /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = compress.c; sourceTree = "<group>"; };
+		A71875FD1DA6B86200FFFFBA /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
+		A71875FE1DA6B86200FFFFBA /* crc32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc32.h; sourceTree = "<group>"; };
+		A71875FF1DA6B86200FFFFBA /* deflate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = deflate.c; sourceTree = "<group>"; };
+		A71876001DA6B86200FFFFBA /* deflate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deflate.h; sourceTree = "<group>"; };
+		A71876011DA6B86200FFFFBA /* gzclose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gzclose.c; sourceTree = "<group>"; };
+		A71876021DA6B86200FFFFBA /* gzguts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gzguts.h; sourceTree = "<group>"; };
+		A71876031DA6B86200FFFFBA /* gzlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gzlib.c; sourceTree = "<group>"; };
+		A71876041DA6B86200FFFFBA /* gzread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gzread.c; sourceTree = "<group>"; };
+		A71876051DA6B86200FFFFBA /* gzwrite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gzwrite.c; sourceTree = "<group>"; };
+		A71876061DA6B86200FFFFBA /* infback.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = infback.c; sourceTree = "<group>"; };
+		A71876071DA6B86200FFFFBA /* inffast.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = inffast.c; sourceTree = "<group>"; };
+		A71876081DA6B86200FFFFBA /* inffast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inffast.h; sourceTree = "<group>"; };
+		A71876091DA6B86200FFFFBA /* inffixed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inffixed.h; sourceTree = "<group>"; };
+		A718760A1DA6B86200FFFFBA /* inflate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = inflate.c; sourceTree = "<group>"; };
+		A718760B1DA6B86200FFFFBA /* inflate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inflate.h; sourceTree = "<group>"; };
+		A718760C1DA6B86200FFFFBA /* inftrees.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = inftrees.c; sourceTree = "<group>"; };
+		A718760D1DA6B86200FFFFBA /* inftrees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftrees.h; sourceTree = "<group>"; };
+		A718760E1DA6B86200FFFFBA /* trees.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = trees.c; sourceTree = "<group>"; };
+		A718760F1DA6B86200FFFFBA /* trees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trees.h; sourceTree = "<group>"; };
+		A71876101DA6B86200FFFFBA /* uncompr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = uncompr.c; sourceTree = "<group>"; };
+		A71876111DA6B86200FFFFBA /* zconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zconf.h; sourceTree = "<group>"; };
+		A71876121DA6B86200FFFFBA /* zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zlib.h; sourceTree = "<group>"; };
+		A71876131DA6B86200FFFFBA /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zutil.c; sourceTree = "<group>"; };
+		A71876141DA6B86200FFFFBA /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zutil.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A71875E01DA6506A00FFFFBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A71875DA1DA6506A00FFFFBA = {
+			isa = PBXGroup;
+			children = (
+				A71875F91DA6B84B00FFFFBA /* adler32.c */,
+				A71875E51DA6506A00FFFFBA /* DataProcessor */,
+				A71875E41DA6506A00FFFFBA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A71875E41DA6506A00FFFFBA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A71875E31DA6506A00FFFFBA /* DataProcessor */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A71875E51DA6506A00FFFFBA /* DataProcessor */ = {
+			isa = PBXGroup;
+			children = (
+				A71875E61DA6506A00FFFFBA /* main.m */,
+				A71875EF1DA659B000FFFFBA /* FileProcessor.h */,
+				A71875F01DA659B000FFFFBA /* FileProcessor.m */,
+				A71875F21DA65B7400FFFFBA /* XMLReader.h */,
+				A71875F31DA65B7400FFFFBA /* XMLReader.m */,
+				A71875F51DA6B70600FFFFBA /* DCTar.h */,
+				A71875F61DA6B70600FFFFBA /* DCTar.m */,
+				A71875FB1DA6B86200FFFFBA /* adler32.c */,
+				A71875FC1DA6B86200FFFFBA /* compress.c */,
+				A71875FD1DA6B86200FFFFBA /* crc32.c */,
+				A71875FE1DA6B86200FFFFBA /* crc32.h */,
+				A71875FF1DA6B86200FFFFBA /* deflate.c */,
+				A71876001DA6B86200FFFFBA /* deflate.h */,
+				A71876011DA6B86200FFFFBA /* gzclose.c */,
+				A71876021DA6B86200FFFFBA /* gzguts.h */,
+				A71876031DA6B86200FFFFBA /* gzlib.c */,
+				A71876041DA6B86200FFFFBA /* gzread.c */,
+				A71876051DA6B86200FFFFBA /* gzwrite.c */,
+				A71876061DA6B86200FFFFBA /* infback.c */,
+				A71876071DA6B86200FFFFBA /* inffast.c */,
+				A71876081DA6B86200FFFFBA /* inffast.h */,
+				A71876091DA6B86200FFFFBA /* inffixed.h */,
+				A718760A1DA6B86200FFFFBA /* inflate.c */,
+				A718760B1DA6B86200FFFFBA /* inflate.h */,
+				A718760C1DA6B86200FFFFBA /* inftrees.c */,
+				A718760D1DA6B86200FFFFBA /* inftrees.h */,
+				A718760E1DA6B86200FFFFBA /* trees.c */,
+				A718760F1DA6B86200FFFFBA /* trees.h */,
+				A71876101DA6B86200FFFFBA /* uncompr.c */,
+				A71876111DA6B86200FFFFBA /* zconf.h */,
+				A71876121DA6B86200FFFFBA /* zlib.h */,
+				A71876131DA6B86200FFFFBA /* zutil.c */,
+				A71876141DA6B86200FFFFBA /* zutil.h */,
+			);
+			path = DataProcessor;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A71875E21DA6506A00FFFFBA /* DataProcessor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A71875EA1DA6506A00FFFFBA /* Build configuration list for PBXNativeTarget "DataProcessor" */;
+			buildPhases = (
+				A71875DF1DA6506A00FFFFBA /* Sources */,
+				A71875E01DA6506A00FFFFBA /* Frameworks */,
+				A71875E11DA6506A00FFFFBA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DataProcessor;
+			productName = DataProcessor;
+			productReference = A71875E31DA6506A00FFFFBA /* DataProcessor */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A71875DB1DA6506A00FFFFBA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Naguna;
+				TargetAttributes = {
+					A71875E21DA6506A00FFFFBA = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = A71875DE1DA6506A00FFFFBA /* Build configuration list for PBXProject "DataProcessor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A71875DA1DA6506A00FFFFBA;
+			productRefGroup = A71875E41DA6506A00FFFFBA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A71875E21DA6506A00FFFFBA /* DataProcessor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A71875DF1DA6506A00FFFFBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A71876221DA6B86200FFFFBA /* uncompr.c in Sources */,
+				A718761C1DA6B86200FFFFBA /* gzwrite.c in Sources */,
+				A718761D1DA6B86200FFFFBA /* infback.c in Sources */,
+				A71876231DA6B86200FFFFBA /* zutil.c in Sources */,
+				A71875F71DA6B70600FFFFBA /* DCTar.m in Sources */,
+				A718761B1DA6B86200FFFFBA /* gzread.c in Sources */,
+				A718761E1DA6B86200FFFFBA /* inffast.c in Sources */,
+				A71875F11DA659B000FFFFBA /* FileProcessor.m in Sources */,
+				A71876191DA6B86200FFFFBA /* gzclose.c in Sources */,
+				A71875F41DA65B7400FFFFBA /* XMLReader.m in Sources */,
+				A71875E71DA6506A00FFFFBA /* main.m in Sources */,
+				A71876171DA6B86200FFFFBA /* crc32.c in Sources */,
+				A71876201DA6B86200FFFFBA /* inftrees.c in Sources */,
+				A718761A1DA6B86200FFFFBA /* gzlib.c in Sources */,
+				A71876151DA6B86200FFFFBA /* adler32.c in Sources */,
+				A718761F1DA6B86200FFFFBA /* inflate.c in Sources */,
+				A71876211DA6B86200FFFFBA /* trees.c in Sources */,
+				A71876181DA6B86200FFFFBA /* deflate.c in Sources */,
+				A71876161DA6B86200FFFFBA /* compress.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A71875E81DA6506A00FFFFBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A71875E91DA6506A00FFFFBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A71875EB1DA6506A00FFFFBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DataProcessor",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A71875EC1DA6506A00FFFFBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DataProcessor",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A71875DE1DA6506A00FFFFBA /* Build configuration list for PBXProject "DataProcessor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A71875E81DA6506A00FFFFBA /* Debug */,
+				A71875E91DA6506A00FFFFBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A71875EA1DA6506A00FFFFBA /* Build configuration list for PBXNativeTarget "DataProcessor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A71875EB1DA6506A00FFFFBA /* Debug */,
+				A71875EC1DA6506A00FFFFBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A71875DB1DA6506A00FFFFBA /* Project object */;
+}
