@@ -49,7 +49,6 @@
 		A71875F31DA65B7400FFFFBA /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		A71875F51DA6B70600FFFFBA /* DCTar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCTar.h; sourceTree = "<group>"; };
 		A71875F61DA6B70600FFFFBA /* DCTar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCTar.m; sourceTree = "<group>"; };
-		A71875F91DA6B84B00FFFFBA /* adler32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = DataProcessor/ZLib/adler32.c; sourceTree = "<group>"; };
 		A71875FB1DA6B86200FFFFBA /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = adler32.c; sourceTree = "<group>"; };
 		A71875FC1DA6B86200FFFFBA /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = compress.c; sourceTree = "<group>"; };
 		A71875FD1DA6B86200FFFFBA /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
@@ -92,7 +91,6 @@
 		A71875DA1DA6506A00FFFFBA = {
 			isa = PBXGroup;
 			children = (
-				A71875F91DA6B84B00FFFFBA /* adler32.c */,
 				A71875E51DA6506A00FFFFBA /* DataProcessor */,
 				A71875E41DA6506A00FFFFBA /* Products */,
 			);
@@ -356,6 +354,7 @@
 				A71875EC1DA6506A00FFFFBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
