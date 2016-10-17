@@ -1,0 +1,4 @@
+Quick and dirty PubMed XML > SQL processor for a few of the field values. You'll have to work out the required
+directory structure and MySQL table layout yourself!
+
+Uses DCTar (Dalton Cherry), XMLProcessor (Troy Brant, Antoine Marcadet, Divan Visagie), and ZLib.
