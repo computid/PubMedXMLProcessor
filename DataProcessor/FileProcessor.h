@@ -13,5 +13,5 @@
 {
     
 }
--(void)ProcessXMLFile:(NSString *)FileName;
+-(void)ProcessXMLFile:(NSString *)RunNumber :(NSString *)InputDirectory :(NSString*)OutputDirectory;
 @end

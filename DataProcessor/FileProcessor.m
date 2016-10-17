@@ -13,10 +13,12 @@
 
 @implementation FileProcessor
 
--(void)ProcessXMLFile:(NSString *)Directory
+-(void)ProcessXMLFile:(NSString *)RunNumber :(NSString *)InputDirectory :(NSString*)OutputDirectory
 {
+    NSLog(@"Process number: %@", RunNumber);
     
-    NSArray* dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/Users/AdamBradley/Desktop/PubMed/ftp.ncbi.nlm.nih.gov/pubmed/baseline/" error:Nil];
+    
+    NSArray* dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:InputDirectory error:Nil];
     
     NSArray* TarFiles = [dirs filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH '.xml.gz'"]];
     
@@ -24,21 +26,32 @@
     {
         //NSLog(@"Tarfiles: %@", [TarFiles objectAtIndex:p]);
         
-        NSString * Frompath = @"/Users/AdamBradley/Desktop/PubMed/ftp.ncbi.nlm.nih.gov/pubmed/baseline/";
-        NSString * Filepath = [Frompath stringByAppendingPathComponent:[TarFiles objectAtIndex:p]];
+        @autoreleasepool {
         
-        NSString* toPath = @"/Users/AdamBradley/Desktop/PubMed/ftp.ncbi.nlm.nih.gov/pubmed/baseline/Output/";
+        NSString * Frompath = InputDirectory;
+        NSString * Filepath = [Frompath stringByAppendingPathComponent:[TarFiles objectAtIndex:p]];
+            
+        NSString * FileNameWithoutExt1 = [[[TarFiles objectAtIndex:p] lastPathComponent] stringByDeletingPathExtension];
+        NSString * FileNameWithoutExt = [[FileNameWithoutExt1 lastPathComponent] stringByDeletingPathExtension];
+        
+        NSString* toPath = [NSString stringWithFormat:@"%@/Temp/",InputDirectory];
         NSString* toPath1 = [toPath stringByAppendingPathComponent:[NSString stringWithFormat:@"testFile-%i.xml",p]];
         NSError * err1;
         [DCTar gzipDecompress:Filepath toPath:toPath1 error:&err1];
         
         NSURL * URL1 = [NSURL fileURLWithPath:Filepath];
-        NSURL * URL2 = [NSURL fileURLWithPath:[NSString stringWithFormat:@"/Users/AdamBradley/Desktop/PubMed/ftp.ncbi.nlm.nih.gov/pubmed/baseline/Done/%@",[TarFiles objectAtIndex:p]]];
-        
+        NSURL * URL2 = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Done/%@",InputDirectory,[TarFiles objectAtIndex:p]]];
         NSError * err2;
         [[NSFileManager defaultManager] copyItemAtURL:URL1 toURL:URL2 error:&err2];
         
         //NSLog(@"Error: %@", err2);
+        
+        
+        
+        NSMutableArray * AbstractQueries = [[NSMutableArray alloc] init];
+        NSMutableArray * KeywordQueries = [[NSMutableArray alloc] init];
+        NSMutableArray * MeshHeadingQueries = [[NSMutableArray alloc] init];
+        NSMutableArray * ArticleQueries = [[NSMutableArray alloc] init];
         
 
         
@@ -80,11 +93,114 @@
             //NSString * Language = [NSString stringWithFormat:@"%@",xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"Article"][@"Language"][@"text"]];
             NSString * Language = @"";
             
-            NSString * GeneralNote = [NSString stringWithFormat:@"%@",xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"GeneralNote"][@"text"]];
+            NSString * GeneralNote = @"";
+            
+            id jso5 = xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"GeneralNote"];
+            
+            if (jso5 == nil) {
+                // Error.  You should probably have passed an NSError ** as the error
+                // argument so you could log it.
+            } else if ([jso5 isKindOfClass:[NSMutableDictionary class]]) {
+            
+                GeneralNote = [NSString stringWithFormat:@"%@",xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"GeneralNote"][@"text"]];
+            
+            } else {
+                GeneralNote = @"";
+            }
+            
+        //    NSMutableArray * AbstractArray = [[NSMutableArray alloc] init];
+            
+            id jso99 = xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"OtherAbstract"];
             
             
-            NSString * AbstractText = [NSString stringWithFormat:@"%@",xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"OtherAbstract"][@"AbstractText"][@"text"]];
+            if (jso99 == nil) {
+                // Error.  You should probably have passed an NSError ** as the error
+                // argument so you could log it.
+            } else if ([jso99 isKindOfClass:[NSArray class]]) {
+                
+                for(int h=0;h<[xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"OtherAbstract"] count];h++)
+                {
+                    NSString * CurrentAbstract = xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"OtherAbstract"][h][@"AbstractText"][@"text"];
+                    CurrentAbstract = [CurrentAbstract stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+                    
+                    if(![CurrentAbstract isEqualToString:@"Abstract available from the publisher."])
+                    {
+                        if(([CurrentAbstract length] > 2) && (![CurrentAbstract isEqual:@"(null)"]))
+                        {
+                            NSString * AbstractQuery = [NSString stringWithFormat:@"(NULL,'%@','%@')",PMID,CurrentAbstract];
+                            
+                            [AbstractQueries addObject:AbstractQuery];
+                        }
+                    }
+                }
+                    
+                
+                // process array elements
+            } else if ([jso99 isKindOfClass:[NSDictionary class]]) {
+                NSString * AbstractText = [NSString stringWithFormat:@"%@",xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"OtherAbstract"][@"AbstractText"][@"text"]];
+                AbstractText = [AbstractText stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+                
+                if(![AbstractText isEqualToString:@"Abstract available from the publisher."])
+                {
+                    if(([AbstractText length] > 2) && (![AbstractText isEqual:@"(null)"]))
+                    {
+                        NSString * AbstractQuery = [NSString stringWithFormat:@"(NULL,'%@','%@')",PMID,AbstractText];
+                        
+                        [AbstractQueries addObject:AbstractQuery];
+                    }
+                }
+                // process dictionary elements
+            } else {
+                // Shouldn't happen unless you use the NSJSONReadingAllowFragments flag.
+                NSLog(@"Something else?!?: %@", jso99);
+            }
             
+            
+            //Abstracts
+            
+            id jso88 = xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"Abstract"];
+            
+            
+            if (jso88 == nil) {
+                // Error.  You should probably have passed an NSError ** as the error
+                // argument so you could log it.
+            } else if ([jso88 isKindOfClass:[NSArray class]]) {
+                
+                for(int h=0;h<[xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"Abstract"] count];h++)
+                {
+                    NSString * CurrentAbstract = xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"Abstract"][h][@"AbstractText"][@"text"];
+                    CurrentAbstract = [CurrentAbstract stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+                    
+                    if(([CurrentAbstract length] > 2) && (![CurrentAbstract isEqual:@"(null)"]))
+                    {
+                        NSString * AbstractQuery = [NSString stringWithFormat:@"(NULL,'%@','%@')",PMID,CurrentAbstract];
+                        
+                        [AbstractQueries addObject:AbstractQuery];
+                    }
+                }
+                
+                
+                // process array elements
+            } else if ([jso88 isKindOfClass:[NSDictionary class]]) {
+                NSString * AbstractText = [NSString stringWithFormat:@"%@",xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"Abstract"][@"AbstractText"][@"text"]];
+                AbstractText = [AbstractText stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+                
+                if(([AbstractText length] > 2) && (![AbstractText isEqual:@"(null)"]))
+                {
+                    NSString * AbstractQuery = [NSString stringWithFormat:@"(NULL,'%@','%@')",PMID,AbstractText];
+                    
+                    [AbstractQueries addObject:AbstractQuery];
+                }
+                // process dictionary elements
+            } else {
+                // Shouldn't happen unless you use the NSJSONReadingAllowFragments flag.
+                NSLog(@"Something else?!?: %@", jso99);
+            }
+
+            
+            //End Abstracts
+
+
             ArticleTitle = [ArticleTitle stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
             PMID = [PMID stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
             DateCreated = [DateCreated stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
@@ -96,7 +212,9 @@
             ISOAbbreviation = [ISOAbbreviation stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
             Language = [Language stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
             GeneralNote = [GeneralNote stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
-            AbstractText = [AbstractText stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+           // AbstractText = [AbstractText stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+
+
             
             id jso = xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"KeywordList"];
             if (jso == nil) {
@@ -122,9 +240,11 @@
                             CurrentKeyword = [CurrentKeyword stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
                             NSString * MajorSwitch = [[ArrayOfKeywords objectAtIndex:e] objectForKey:@"MajorTopicYN"];
                             MajorSwitch = [MajorSwitch stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
-                            NSString * Query = [NSString stringWithFormat:@"INSERT INTO `Keywords` (`id`, `PMID`, `MajorTopic`, `Keyword`) VALUES (NULL,'%@','%@','%@');", PMID, MajorSwitch, CurrentKeyword];
+                           
                             
-                            [ArrayOfQueries addObject:Query];
+                            NSString * KeywordQuery = [NSString stringWithFormat:@"(NULL,'%@','%@','%@')", PMID, MajorSwitch, CurrentKeyword];
+                            
+                            [KeywordQueries addObject:KeywordQuery];
                         }
                         
                     } else if ([jso1 isKindOfClass:[NSDictionary class]]) {
@@ -135,9 +255,9 @@
                         CurrentKeyword = [CurrentKeyword stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
                         NSString * MajorSwitch = [dict objectForKey:@"MajorTopicYN"];
                         MajorSwitch = [MajorSwitch stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
-                        NSString * Query = [NSString stringWithFormat:@"INSERT INTO `Keywords` (`id`, `PMID`, `MajorTopic`, `Keyword`) VALUES (NULL,'%@','%@','%@');", PMID, MajorSwitch, CurrentKeyword];
+                        NSString * KeywordQuery = [NSString stringWithFormat:@"(NULL,'%@','%@','%@')", PMID, MajorSwitch, CurrentKeyword];
                         
-                        [ArrayOfQueries addObject:Query];
+                        [KeywordQueries addObject:KeywordQuery];
                         // process dictionary elements
                     } else {
                         // Shouldn't happen unless you use the NSJSONReadingAllowFragments flag.
@@ -169,9 +289,9 @@
                         CurrentKeyword = [CurrentKeyword stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
                         NSString * MajorSwitch = [[ArrayOfKeywords objectAtIndex:e] objectForKey:@"MajorTopicYN"];
                         MajorSwitch = [MajorSwitch stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
-                        NSString * Query = [NSString stringWithFormat:@"INSERT INTO `Keywords` (`id`, `PMID`, `MajorTopic`, `Keyword`) VALUES (NULL,'%@','%@','%@');", PMID, MajorSwitch, CurrentKeyword];
+                        NSString * KeywordQuery = [NSString stringWithFormat:@"(NULL,'%@','%@','%@')", PMID, MajorSwitch, CurrentKeyword];
                         
-                        [ArrayOfQueries addObject:Query];
+                        [KeywordQueries addObject:KeywordQuery];
                     }
                     
                 } else if ([jso1 isKindOfClass:[NSDictionary class]]) {
@@ -182,9 +302,9 @@
                     CurrentKeyword = [CurrentKeyword stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
                     NSString * MajorSwitch = [dict objectForKey:@"MajorTopicYN"];
                     MajorSwitch = [MajorSwitch stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
-                    NSString * Query = [NSString stringWithFormat:@"INSERT INTO `Keywords` (`id`, `PMID`, `MajorTopic`, `Keyword`) VALUES (NULL,'%@','%@','%@');", PMID, MajorSwitch, CurrentKeyword];
+                    NSString * KeywordQuery = [NSString stringWithFormat:@"(NULL,'%@','%@','%@')", PMID, MajorSwitch, CurrentKeyword];
                     
-                    [ArrayOfQueries addObject:Query];
+                    [KeywordQueries addObject:KeywordQuery];
                     // process dictionary elements
                 } else {
                     // Shouldn't happen unless you use the NSJSONReadingAllowFragments flag.
@@ -215,9 +335,9 @@
                     NSString * TextData = [CurrentMeshHeading objectForKey:@"text"];
                     TextData = [TextData stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
                     
-                    NSString * Query = [NSString stringWithFormat:@"INSERT INTO `MeshHeadings` (`id`, `PMID`, `MajorTopic`, `UI`, `Heading`) VALUES (NULL,'%@','%@','%@','%@');", PMID, MajorTopicFlag, UI,TextData];
+                    NSString * Query = [NSString stringWithFormat:@"(NULL,'%@','%@','%@','%@')", PMID, MajorTopicFlag, UI,TextData];
                     
-                    [ArrayOfQueries addObject:Query];
+                    [MeshHeadingQueries addObject:Query];
                     
                     // NSString * CurrentMeshHeadingText = [[MeshHeadings objectAtIndex:y] objectForKey:@"text"];
                 }
@@ -232,56 +352,136 @@
                 NSString * TextData = [CurrentMeshHeading objectForKey:@"text"];
                 TextData = [TextData stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
                 
-                NSString * Query = [NSString stringWithFormat:@"INSERT INTO `MeshHeadings` (`id`, `PMID`, `MajorTopic`, `UI`, `Heading`) VALUES (NULL,'%@','%@','%@','%@');", PMID, MajorTopicFlag, UI,TextData];
+                NSString * Query = [NSString stringWithFormat:@"(NULL,'%@','%@','%@','%@')", PMID, MajorTopicFlag, UI,TextData];
                 
-                [ArrayOfQueries addObject:Query];
+                [MeshHeadingQueries addObject:Query];
 
                 // process dictionary elements
             } else {
                 // Shouldn't happen unless you use the NSJSONReadingAllowFragments flag.
                 NSLog(@"Something else?!?: %@", jso1);
             }
-
-            //NSArray * MeshHeadings = xmlDictionary[@"MedlineCitationSet"][@"MedlineCitation"][i][@"MeshHeadingList"][@"MeshHeading"];
             
-        
-            /*NSLog(@"ArticleTitle: %@", [NSString stringWithFormat:@"%@",ArticleTitle]);
-            NSLog(@"PMID: %@", [NSString stringWithFormat:@"%@",PMID]);
-            NSLog(@"DateCreated: %@", [NSString stringWithFormat:@"%@",DateCreated]);
-            NSLog(@"DateCompleted: %@", [NSString stringWithFormat:@"%@",DateCompleted]);
-            NSLog(@"DateRevised: %@", [NSString stringWithFormat:@"%@",DateRevised]);
-            NSLog(@"Volume: %@", [NSString stringWithFormat:@"%@",Volume]);
-            NSLog(@"PublicationDate: %@", [NSString stringWithFormat:@"%@",PublicationDate]);
-            NSLog(@"JournalTitle: %@", [NSString stringWithFormat:@"%@",JournalTitle]);
-            
-            NSLog(@"ISOAbbreviation: %@", [NSString stringWithFormat:@"%@",ISOAbbreviation]);
-            NSLog(@"Language: %@", [NSString stringWithFormat:@"%@",Language]);
-            NSLog(@"GeneralNote: %@", [NSString stringWithFormat:@"%@",GeneralNote]);
-            NSLog(@"AbstractText: %@", AbstractText);
-            */
-            
-            
-            if(([AbstractText length] > 2) && (![AbstractText isEqual:@"(null)"]))
+            /*if(([AbstractText length] > 2) && (![AbstractText isEqual:@"(null)"]))
             {
-                NSString * AbstractQuery = [NSString stringWithFormat:@"INSERT INTO `Abstracts` (`id`,`PMID`,`Abstract`) VALUES (NULL,'%@','%@');",PMID,AbstractText];
+                NSString * AbstractQuery = [NSString stringWithFormat:@"(NULL,'%@','%@')",PMID,AbstractText];
                 
-                [ArrayOfQueries addObject:AbstractQuery];
-            }
+                [AbstractQueries addObject:AbstractQuery];
+            }*/
             
-            NSString * ArticleInsertQuery = [NSString stringWithFormat:@"INSERT INTO `ArticleData` (`id`,`PMID`,`DateCreated`,`DateCompleted`,`DateRevised`,`Volume`,`PublicationDate`,`ArticleTitle`,`ISOAbbreviation`,`JournalTitle`,`Language`,`GeneralNote` ) VALUES (NULL,'%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@');",PMID,DateCreated,DateCompleted,DateRevised,Volume,PublicationDate,ArticleTitle,ISOAbbreviation,JournalTitle,Language,GeneralNote];
+            NSString * ArticleInsertQuery = [NSString stringWithFormat:@"(NULL,'%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",PMID,DateCreated,DateCompleted,DateRevised,Volume,PublicationDate,ArticleTitle,ISOAbbreviation,JournalTitle,Language,GeneralNote];
             
-            [ArrayOfQueries addObject:ArticleInsertQuery];
+            [ArticleQueries addObject:ArticleInsertQuery];
             
         }
         
+        // NSString * AbstractQuery = [NSString stringWithFormat:@"INSERT INTO `Abstracts` (`id`,`PMID`,`Abstract`) VALUES (NULL,'%@','%@');",PMID,AbstractText];
+        
+        if([AbstractQueries count] > 0)
+        {
+        
+            NSMutableString * AbstractQuery = [NSMutableString stringWithFormat:@"INSERT INTO `Abstracts` (`id`,`PMID`,`Abstract`) VALUES "];
+
+            
+            for(int f=0;f<[AbstractQueries count]; f++)
+            {
+                NSString * currentItem = [AbstractQueries objectAtIndex:f];
+                currentItem = [currentItem stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+                [AbstractQuery appendString:currentItem];
+                [AbstractQuery appendString:@","];
+            }
+            
+            
+            NSString *AbstractQuery1 = [AbstractQuery substringToIndex:[AbstractQuery length]-1];
+            AbstractQuery1 = [AbstractQuery1 stringByAppendingString:@";"];
+            
+            AbstractQuery1 = [AbstractQuery1 stringByReplacingOccurrencesOfString:@"'\'" withString:@"''"];
+
+            
+            [ArrayOfQueries addObject:AbstractQuery1];
+        
+        }
+        
+        
+        if([KeywordQueries count] > 0)
+        {
+            NSMutableString * KeywordInsertQuery = [NSMutableString stringWithFormat:@"INSERT INTO `Keywords` (`id`, `PMID`, `MajorTopic`, `Keyword`) VALUES "];
+            
+            for(int f=0;f<[KeywordQueries count]; f++)
+            {
+                NSString * currentItem = [KeywordQueries objectAtIndex:f];
+                currentItem = [currentItem stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+                [KeywordInsertQuery appendString:currentItem];
+                [KeywordInsertQuery appendString:@","];
+            }
+            
+            NSString *KeywordInsertQuery1 = [KeywordInsertQuery substringToIndex:[KeywordInsertQuery length]-1];
+            KeywordInsertQuery1 = [KeywordInsertQuery1 stringByAppendingString:@";"];
+            
+            KeywordInsertQuery1 = [KeywordInsertQuery1 stringByReplacingOccurrencesOfString:@"'\'" withString:@"''"];
+            
+            [ArrayOfQueries addObject:KeywordInsertQuery1];
+            
+        }
+        
+        if([ArticleQueries count] > 0)
+        {
+            NSMutableString * ArticleInsertQuery = [NSMutableString stringWithFormat:@"INSERT INTO `ArticleData` (`id`,`PMID`,`DateCreated`,`DateCompleted`,`DateRevised`,`Volume`,`PublicationDate`,`ArticleTitle`,`ISOAbbreviation`,`JournalTitle`,`Language`,`GeneralNote` ) VALUES "];
+            
+            for(int f=0;f<[ArticleQueries count]; f++)
+            {
+                NSString * currentItem = [ArticleQueries objectAtIndex:f];
+                currentItem = [currentItem stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+                [ArticleInsertQuery appendString:currentItem];
+                [ArticleInsertQuery appendString:@","];
+            }
+            
+            NSString *ArticleInsertQuery1 = [ArticleInsertQuery substringToIndex:[ArticleInsertQuery length]-1];
+            ArticleInsertQuery1 = [ArticleInsertQuery1 stringByAppendingString:@";"];
+            
+            ArticleInsertQuery1 = [ArticleInsertQuery1 stringByReplacingOccurrencesOfString:@"'\'" withString:@"''"];
+            
+            [ArrayOfQueries addObject:ArticleInsertQuery1];
+        }
+        
+        if([MeshHeadingQueries count] > 0)
+        {
+        
+            NSMutableString * MeshHeadingQuery = [NSMutableString stringWithFormat:@"INSERT INTO `MeshHeadings` (`id`, `PMID`, `MajorTopic`, `UI`, `Heading`) VALUES "];
+            //NSString * MeshHeadingQuery = [NSString stringWithFormat:];
+
+            for(int h=0;h<[MeshHeadingQueries count]; h++)
+            {
+                NSString * currentItem = [MeshHeadingQueries objectAtIndex:h];
+                currentItem = [currentItem stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+                if([currentItem length] > 1)
+                {
+                    [MeshHeadingQuery appendString:currentItem];
+                    [MeshHeadingQuery appendString:@","];
+                    //MeshHeadingQuery = [MeshHeadingQuery stringByAppendingString:];
+                    //MeshHeadingQuery = [MeshHeadingQuery stringByAppendingString:@","];
+                }
+                
+            }
+            
+            NSString *MeshHeadingQuery1 = [MeshHeadingQuery substringToIndex:[MeshHeadingQuery length]-1];
+            
+            MeshHeadingQuery1 = [MeshHeadingQuery1 stringByAppendingString:@";"];
+            
+            MeshHeadingQuery1 = [MeshHeadingQuery1 stringByReplacingOccurrencesOfString:@"'\'" withString:@"''"];
+
+            
+            [ArrayOfQueries addObject:MeshHeadingQuery1];
+
+        }
         
         //NSLog(@"Queries: %@", ArrayOfQueries);
         
-        [[NSFileManager defaultManager] createFileAtPath:[NSString stringWithFormat:@"/Users/AdamBradley/Desktop/Queries/Queries-%i.txt",p] contents:nil attributes:nil];
+        [[NSFileManager defaultManager] createFileAtPath:[NSString stringWithFormat:@"%@/%@-%i.txt",OutputDirectory,FileNameWithoutExt,p] contents:nil attributes:nil];
         
         for(int x=0; x<[ArrayOfQueries count]; x++)
         {
-            NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:[NSString stringWithFormat:@"/Users/AdamBradley/Desktop/Queries/Queries-%i.txt",p]];
+            NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:[NSString stringWithFormat:@"%@/%@-%i.txt",OutputDirectory,FileNameWithoutExt,p]];
             [fileHandle seekToEndOfFile];
             [fileHandle writeData:[[ArrayOfQueries objectAtIndex:x] dataUsingEncoding:NSUTF8StringEncoding]];
             [fileHandle writeData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -293,11 +493,18 @@
         [[NSFileManager defaultManager] removeItemAtPath:toPath1 error:&err4];
         [[NSFileManager defaultManager] removeItemAtPath:Filepath error:&err4];
 
-        NSLog(@"Err: %@", err4);
+        if(err4)
+        {
+            NSLog(@"Err: %@", err4);
+        }
+        
+        NSLog(@"Input: %@",[NSString stringWithFormat:@"%@",Filepath]);
+        NSLog(@"Output: %@",[NSString stringWithFormat:@"%@/%@-%i.txt",OutputDirectory,FileNameWithoutExt,p]);
         
         xmlDictionary = nil;
         ArrayOfQueries = nil;
         fileContents = nil;
+        }
     }
 }
 

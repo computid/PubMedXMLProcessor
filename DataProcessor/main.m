@@ -12,15 +12,29 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
+
+       /* for(int i=0;i<sizeof(argv);i++)
+        {
+            NSLog(@"Arg: %s", argv[i]);
+        }*/
+        
+        NSLog(@"Arg1: %s", argv[1]);
+        NSLog(@"Arg2: %s", argv[2]);
+        NSLog(@"Arg3: %s", argv[3]);
+        
+        NSString * RunNumArg = [NSString stringWithFormat:@"%s", argv[1]];
+        NSString * InputDIR = [NSString stringWithFormat:@"%s", argv[2]];
+        NSString * OutputDIR = [NSString stringWithFormat:@"%s", argv[3]];
+        
+        //-(void)ProcessXMLFile:(NSString *)RunNumber :(NSString *)InputDirectory :(NSString*)OutputDirectory
         FileProcessor *Processor = [[FileProcessor alloc] init];
         
         
-        
-        
-        [Processor ProcessXMLFile:@"/Users/AdamBradley/Desktop/PubMed/ftp.ncbi.nlm.nih.gov/pubmed/baseline/medline16n0006.xml"];
+        [Processor ProcessXMLFile:RunNumArg :InputDIR :OutputDIR];
         // insert code here...
         NSLog(@"Hello, World!");
     }
     return 0;
 }
 
+  //-(void)ProcessXMLFile:(NSString *)RunNumber :(NSString *)InputDirectory :(NSString*)OutputDirectory
